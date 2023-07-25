@@ -35,11 +35,13 @@ for d in dirs:
     for f in os.listdir(d):
         fstr = open(os.path.join(d, f),
                     encoding="utf-8").read().replace(' ', '').replace('　', '')
-        title = fstr.split('\n')[0].replace('(', '（').replace(')', '）')
+        title = fstr.split('\n')[0]
         poet = fstr.split('\n')[1]
         poem = fstr.removeprefix(title+'\n'+poet+'\n')
-        print('\033[1m'+title+'\033[0m , '+poet, splitText(poem))
+#        print('\033[1m'+title+'\033[0m , '+poet, splitText(poem))
         dic[d].append([title,poet,splitText(poem)])
-print(dic)
+print(dic['bx1'])
 jsn=json.dumps(dic)
-jsnf=open()
+jsnf=open("poem.json",'w+')
+jsnf.write(jsn)
+jsnf.close()
