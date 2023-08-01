@@ -39,7 +39,7 @@ for d in dirs:
         poet = fstr.split('\n')[1]
         poem = fstr.removeprefix(title+'\n'+poet+'\n')
 #        print('\033[1m'+title+'\033[0m , '+poet, splitText(poem))
-        dls.append([title,poet,splitText(poem)])
+        dls.append({'title':title,'poet':poet,'poem':splitText(poem)})
     ls.append(dls)
 #print(dic['bx1'])
 jsn=json.dumps(ls)
