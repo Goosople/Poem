@@ -27,11 +27,11 @@ def splitText(text: str):
     return r
 
 
-dic={}
+ls=[]
 dirs = ('bx1', 'bx1sd', 'bx2', 'bx2sd', 'xb1',
         'xb1sd', 'xb2', 'xb2sd', 'xb3', 'xb3sd', 'kb')
 for d in dirs:
-    dic[d]=[]
+    dls=[]
     for f in os.listdir(d):
         fstr = open(os.path.join(d, f),
                     encoding="utf-8").read().replace(' ', '').replace('　', '')
@@ -39,9 +39,11 @@ for d in dirs:
         poet = fstr.split('\n')[1]
         poem = fstr.removeprefix(title+'\n'+poet+'\n')
 #        print('\033[1m'+title+'\033[0m , '+poet, splitText(poem))
-        dic[d].append([title,poet,splitText(poem)])
-print(dic['bx1'])
-jsn=json.dumps(dic)
+        dls.append([title,poet,splitText(poem)])
+    ls.append(dls)
+#print(dic['bx1'])
+jsn=json.dumps(ls)
+print(ls) #,'\n========================================\n',jsn)
 jsnf=open("poem.json",'w+')
 jsnf.write(jsn)
 jsnf.close()
