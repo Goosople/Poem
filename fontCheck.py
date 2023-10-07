@@ -18,5 +18,5 @@ for d in dirs:
 ldic = {}
 for c in s:
     if not (ord(c) in uniMap.keys()):
-        ldic[c] = False
+        ldic[c] = ord(c)
 print(ldic)

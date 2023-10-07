@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 cpl=open("cpl.txt",encoding="utf-8").readlines()
 pl=open("pl.txt",encoding="utf-8").readlines()
 isin=[]
