@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>飞花令</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/4.7.0/css/font-awesome.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        form {
+            padding: 10px;
+            margin: auto;
+            max-width: 450px;
+        }
+
+        form input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid grey;
+            float: left;
+            width: 85%;
+            background: #f1f1f1;
+        }
+
+        form button {
+            float: left;
+            width: 15%;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            font-size: 16px;
+            border: 1px solid grey;
+            border-left: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #0b7dda;
+        }
+
+        form::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+
+<body style="padding: 15px;">
+    <h1></h1>
+    <form>
+        <div>
+            <input type="search" id="search" name="q" placeholder="输入要搜索的字……" />
+            <button><i class="fa fa-search"></i></button>
+        </div>
+    </form>
+    <script>
+        function loadFile(filePath) {
+            var result = null;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", filePath, false);
+            xmlhttp.send();
+            if (xmlhttp.status == 200) {
+                result = xmlhttp.responseText;
+            }
+            return result;
+        }
+
+        const keyword = new URLSearchParams(window.location.search).get("q");
+        const searchResult = [document.createElement("p")];
+        if (keyword == null || keyword == '') {
+            searchResult[0].textContent = "输入关键词试试吧！";
+        }
+        else {
+            document.title = `飞“${keyword}”令`;
+            document.getElementById("search").value = keyword;
+            JSON.parse(loadFile("poem.json")).forEach(part => {
+                part.forEach(poem => {
+                    poem["poem"].forEach(verse => {
+                        if (verse.includes(keyword)) {
+                            const v = document.createElement("p");
+                            v.textContent = `${searchResult.length}.《${poem["title"]}》（${poem["poet"]}）：${verse}`;
+                            searchResult.push(v);
+                        }
+                    });
+                });
+            });
+            searchResult[0].textContent = `搜索到包含“${keyword}”的${searchResult.length - 1}个结果：`;
+        }
+        searchResult.forEach(obj => {
+            document.body.appendChild(obj);
+        });
+    </script>
+</body>
+
+</html>
